@@ -2,7 +2,7 @@ import { Field, Int, ObjectType } from 'type-graphql';
 
 @ObjectType()
 export default class Task {
-  @Field((type) => Int)
+  @Field(type => Int)
   id: number;
 
   @Field()
@@ -10,4 +10,7 @@ export default class Task {
 
   @Field()
   completed: boolean;
+
+  @Field()
+  status: boolean;
 }

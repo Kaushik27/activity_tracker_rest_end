@@ -1,20 +1,27 @@
-import { Arg, FieldResolver, Mutation, Query, Resolver, Root } from 'type-graphql';
+import {
+  Arg,
+  FieldResolver,
+  Mutation,
+  Query,
+  Resolver,
+  Root
+} from 'type-graphql';
 import { tasks, TaskData } from '../data/Data';
 import Task from '../schemas/Task';
 
-@Resolver((of) => Task)
+@Resolver(of => Task)
 export default class {
-  @Query((returns) => [Task])
+  @Query(returns => [Task])
   tasks(): TaskData[] {
     return tasks;
   }
 
-  @Query((returns) => Task, { nullable: true })
+  @Query(returns => Task, { nullable: true })
   getTask(@Arg('id') id: number): TaskData | undefined {
     return tasks.find((task: TaskData) => task.id === id);
   }
 
-  @Mutation((returns) => Task)
+  @Mutation(returns => Task)
   markAsCompleted(@Arg('taskId') taskId: number): TaskData {
     const task = tasks.find((task: TaskData) => {
       return task.id === taskId;
@@ -26,6 +33,19 @@ export default class {
       throw new Error(`Task with id ${taskId} is already completed`);
     }
     task.completed = true;
+    return task;
+  }
+
+  @Mutation(returns => Task)
+  toggle(@Arg('taskId') taskId: number): TaskData {
+    const task = tasks.find((task: TaskData) => {
+      return task.id === taskId;
+    });
+    if (!task) {
+      throw new Error(`Couldn't find the task with id ${taskId}`);
+    }
+    
+    task.status = !task.status;
     return task;
   }
 }

@@ -5,6 +5,7 @@
 
 type Mutation {
   markAsCompleted(taskId: Float!): Task!
+  toggle(taskId: Float!): Task!
 }
 
 type Query {
@@ -16,4 +17,5 @@ type Task {
   id: Int!
   title: String!
   completed: Boolean!
+  status: Boolean!
 }
