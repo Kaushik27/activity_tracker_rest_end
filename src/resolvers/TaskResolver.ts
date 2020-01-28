@@ -5,7 +5,7 @@ import Task from '../schemas/Task';
 @Resolver((of) => Task)
 export default class {
   @Query((returns) => [Task])
-  fetchTasks(): TaskData[] {
+  tasks(): TaskData[] {
     return tasks;
   }
 
