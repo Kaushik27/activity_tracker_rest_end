@@ -6,8 +6,15 @@ import { buildSchema } from 'type-graphql';
 import TaskResolver from './resolvers/TaskResolver';
 
 async function bootstrap() {
+  const options = {
+    port: 4444,
+    endpoint: '/graphql',
+    subscriptions: '/subscriptions',
+    playground: '/playground'
+  };
+
   const schema = await buildSchema({
-    resolvers: [ TaskResolver],
+    resolvers: [TaskResolver],
     emitSchemaFile: true
   });
 
@@ -15,7 +22,7 @@ async function bootstrap() {
     schema
   });
 
-  server.start(() => console.log('Server is running on http://localhost:4000'));
+  server.start(options, ({ port }) => console.log(`Server is running on http://localhost:${port}`));
 }
 
 bootstrap();
